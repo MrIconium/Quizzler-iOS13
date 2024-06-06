@@ -86,6 +86,7 @@
                     </view>
                     <connections>
                         <outlet property="questionText" destination="rSI-li-mhO" id="zoN-VQ-mhs"/>
+                        <outlet property="quizProgress" destination="TXm-qh-7Xg" id="maj-d4-0Ta"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

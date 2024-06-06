@@ -9,6 +9,6 @@
 import Foundation
 
 struct Question{
-    var question: String
-    var answer: String
+    var q: String
+    var a: String
 }
