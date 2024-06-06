@@ -10,6 +10,7 @@ import Foundation
 
 class QuizBrain{
     var currentQuestion:Int = 0
+    var score:Int = 0
     
     let questions:[Question] = [Question(q: "A slug's blood is green.", a: "True"),
                                 Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
@@ -28,8 +29,8 @@ class QuizBrain{
     func checkAnswer(_ answerText:String){
         if currentQuestion <= questions.count{
             if questions[currentQuestion].a == answerText {
-                print("correct answer")
-                updateScore()
+                
+                score = score + 1
             } else {
                 print("wrong answer")
             }
@@ -37,9 +38,5 @@ class QuizBrain{
             currentQuestion = currentQuestion + 1
             print(currentQuestion)
         }
-    }
-    
-    func updateScore(){
-        print("Score is updated")
     }
 }
