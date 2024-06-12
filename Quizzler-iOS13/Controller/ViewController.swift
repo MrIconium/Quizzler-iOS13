@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, QuizBrainDelegete {
     
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var quizProgress: UIProgressView!
@@ -20,35 +20,35 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        quiz.delegate = self
         prepareToBegin()
     }
 
     @IBAction func answerButtons(_ sender: UIButton) {
-        
         if let titleText = sender.titleLabel?.text {
             quiz.checkAnswer(titleText)
-            
-            if quiz.currentQuestion >= quiz.questions.count {
-                quizProgress.progress = 0
-                quiz.currentQuestion = 0
-                quiz.score = 0
-                scoreLabel.text = "0"
-                prepareToBegin()
-            } else {
-                updateQuestion()
-            }  
         }
+        
+        if quiz.answerIs == true {
+            sender.backgroundColor = UIColor.green
+        } else {
+            sender.backgroundColor = UIColor.red
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+            sender.backgroundColor = UIColor.clear
+        }
+
+    }
+    
+    func updateDisplay(_ qText:String, _ testScore:Int, _ cProgress:Float) {
+        questionText.text = qText
+        quizProgress.progress = cProgress
+        scoreLabel.text = String(testScore)
     }
     
     func prepareToBegin(){
         questionText.text = quiz.questions[0].q
         quizProgress.progress = 0
-    }
-    
-    func updateQuestion(){
-        questionText.text = quiz.questions[quiz.currentQuestion].q
-        quizProgress.progress = Float(quiz.currentQuestion) / Float(quiz.questions.count)
-        scoreLabel.text = String(quiz.score)
     }
     
 }

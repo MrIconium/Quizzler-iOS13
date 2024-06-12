@@ -8,9 +8,17 @@
 
 import Foundation
 
+protocol QuizBrainDelegete {
+    func updateDisplay(_ qText:String, _ testScore:Int, _ cProgress:Float)
+}
+
 class QuizBrain{
     var currentQuestion:Int = 0
     var score:Int = 0
+    var currentProgress: Float = 0
+    var answerIs: Bool = true
+    
+    var delegate:QuizBrainDelegete?
     
     let questions:[Question] = [Question(q: "A slug's blood is green.", a: "True"),
                                 Question(q: "Approximately one quarter of human bones are in the feet.", a: "True"),
@@ -27,16 +35,21 @@ class QuizBrain{
     ]
     
     func checkAnswer(_ answerText:String){
-        if currentQuestion <= questions.count{
-            if questions[currentQuestion].a == answerText {
-                
-                score = score + 1
-            } else {
-                print("wrong answer")
-            }
-            
-            currentQuestion = currentQuestion + 1
-            print(currentQuestion)
+        if questions[currentQuestion].a == answerText {
+            score = score + 1
+            answerIs = true
+        } else {
+            answerIs = false
         }
+        
+        if currentQuestion < questions.count-1{
+            currentQuestion = currentQuestion + 1
+        } else {
+            currentQuestion = 0
+            score=0
+        }
+        currentProgress = Float(currentQuestion)/Float(questions.count)
+        delegate?.updateDisplay(questions[currentQuestion].q, score, currentProgress)
+        
     }
 }
